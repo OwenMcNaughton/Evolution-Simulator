@@ -29,6 +29,7 @@ namespace Evolve
 
         public static GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
+        public static SpriteBatch spriteBatchOverlay;
         public static SpriteFont font;
 
         public DrawableRect worldBounds;
@@ -36,6 +37,7 @@ namespace Evolve
         public static List<Bot> bots;
         public static List<Food> food;
         public static List<Wall> walls;
+        public Boolean computeAngle;
 
         public static Texture2D botTex;
         public static Texture2D foodTex;
@@ -71,9 +73,9 @@ namespace Evolve
             bots = new List<Bot>();
 
             Random gen = new Random();
-            for (int i = 0; i != 10; i++)
+            for (int i = 0; i != 5; i++)
             {
-                bots.Add(new Bot(gen.Next(worldWidth), gen.Next(worldHeight), botTex, 5d, 20d, 20d));
+                bots.Add(new Bot(gen.Next(worldWidth), gen.Next(worldHeight), botTex, 5d, 20d, 30d));
                 bots[i].angle = gen.Next(360);
             }
 
@@ -89,6 +91,7 @@ namespace Evolve
             font = Content.Load<SpriteFont>("Font");
 
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+            spriteBatchOverlay = new SpriteBatch(graphics.GraphicsDevice);
         }
 
         protected override void UnloadContent()
@@ -105,7 +108,9 @@ namespace Evolve
 
             UpdateFood(gameTime, keyboardState, mouseState);
             UpdateBots(gameTime, keyboardState, mouseState);
-            
+
+            oldMouseState = mouseState;
+            oldKeyboardState = keyboardState;
 
             base.Update(gameTime);
         }
@@ -145,10 +150,24 @@ namespace Evolve
                 cam.Move(new Vector2(0, 10 / cam.zoom));
             }
 
+            if (ks.IsKeyDown(Keys.Space))
+            {
+                Random gen = new Random();
+                bots[0] = new Bot(gen.Next(worldWidth), gen.Next(worldHeight), botTex, 5d, 20d, 30d, bots[0].behaviour, gen);
+                bots[0].angle = gen.Next(360);
+            }
+
+            if (ks.IsKeyDown(Keys.L) && !oldKeyboardState.IsKeyDown(Keys.L))
+            {
+                computeAngle = !computeAngle;
+            }
 
             if (ms.LeftButton == ButtonState.Pressed)
             {
-                walls.Add(new Wall(ms.X - wallTex.Width / 2, ms.Y - wallTex.Height / 2, wallTex));
+                Vector2 mousePos = AdjustMouse(ms);
+
+                walls.Add(new Wall(mousePos.X - wallTex.Width / 2,
+                                   mousePos.Y - wallTex.Height / 2, wallTex));
                 for (int i = 0; i != walls.Count - 1; i++)
                 {
                     if (walls[walls.Count - 1].bounds.Contains((int)walls[i].bounds.Center.X, (int)walls[i].bounds.Center.Y))
@@ -158,15 +177,35 @@ namespace Evolve
                     }
                 }
             }
+
+            if (ms.RightButton == ButtonState.Pressed)
+            {
+                Vector2 mousePos = AdjustMouse(ms);
+
+                for (int i = 0; i != walls.Count; i++)
+                {
+                    if (walls[i].bounds.Contains((int)mousePos.X, (int)mousePos.Y))
+                    {
+                        walls.Remove(walls[i]);
+                        break;
+                    }
+                }
+            }
         }
 
         public void UpdateFood(GameTime gameTime, KeyboardState ks, MouseState ms)
         {
+            Random gen = new Random();
+
+            if (gen.Next(100) == 0)
+            {
+                food.Add(new Food(gen.Next(worldWidth), gen.Next(worldHeight), gen.Next(401) + 400, foodTex));
+            }
+
             for (int i = 0; i != food.Count; i++)
             {
-                if (food[i].Update(gameTime))
+                if (food[i].Update(gameTime, ks))
                 {
-                    Random gen = new Random();
                     switch (gen.Next(4))
                     {
                         case 0:
@@ -227,6 +266,35 @@ namespace Evolve
         {
             for (int i = 0; i != bots.Count; i++)
             {
+                if (bots[i].dead)
+                {
+                    bots.Remove(bots[i]);
+                    i--;
+                    if(i == bots.Count || bots.Count == 0 || i < 0)
+                        break;
+                }
+
+                if (bots[i].priority == (int)Bot.Priorities.mate)
+                {
+                    Random gen = new Random();
+                    for (int j = 0; j != 5; j++)
+                    {
+                        Bot newBot = new Bot(bots[i].pos.X + gen.Next(20)-10, bots[i].pos.Y + gen.Next(20)-10, 
+                            botTex, 5d, 20d, 30d, bots[i].behaviour, gen);
+
+                        newBot.angle = gen.Next(360);
+
+                        bots.Add(newBot);
+                    }
+
+                    bots.Remove(bots[i]);
+
+                    i--;
+                    if(i < 0)
+                        break;
+
+                }
+
                 bots[i].Update(gameTime, ks);
 
                 if (bots[i].pos.X >= worldWidth)
@@ -286,7 +354,37 @@ namespace Evolve
             
             spriteBatch.End();
 
+            spriteBatchOverlay.Begin();
+
+            spriteBatchOverlay.DrawString(font, "Routine: " + bots[0].behaviour.rPoint, new Vector2(10, 10), Color.White);
+            spriteBatchOverlay.DrawString(font, "Explore: " + bots[0].behaviour.explore, new Vector2(10, 40), Color.White);
+            spriteBatchOverlay.DrawString(font, "Left: " + bots[0].behaviour.targetLeft, new Vector2(10, 60), Color.White);
+            spriteBatchOverlay.DrawString(font, "Right: " + bots[0].behaviour.targetRight, new Vector2(10, 80), Color.White);
+            spriteBatchOverlay.DrawString(font, "Forward: " + bots[0].behaviour.targetForward, new Vector2(10, 100), Color.White);
+
+            if (bots[0].target.X != -1)
+            {
+                spriteBatchOverlay.DrawString(font, "Target: " + bots[0].target.X + "x" +
+                                                                 bots[0].target.Y + "y", new Vector2(10, 130), Color.White);
+            }
+            else
+            {
+                spriteBatchOverlay.DrawString(font, "Target: " + "null", new Vector2(10, 130), Color.White);
+            }
+            spriteBatchOverlay.DrawString(font, "TargetTimer: " + bots[0].behaviour.targetTimer, new Vector2(10, 150), Color.White);
+
+            spriteBatchOverlay.DrawString(font, "Energy: " + bots[0].energy, new Vector2(10, 180), Color.White);
+
+            
+            spriteBatchOverlay.End();
+
             base.Draw(gameTime);
+        }
+
+        public Vector2 AdjustMouse(MouseState ms)
+        {
+            return new Vector2(((ms.X) / cam.zoom) + (cam.pos.X - (width/2) / cam.zoom), 
+                               ((ms.Y) / cam.zoom) + (cam.pos.Y - (height/2) / cam.zoom));
         }
     }
 }

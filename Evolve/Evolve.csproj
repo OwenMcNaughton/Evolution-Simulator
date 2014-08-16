@@ -126,8 +126,10 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Agent.cs" />
+    <Compile Include="Behaviour.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="DrawableRect.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="Line.cs" />

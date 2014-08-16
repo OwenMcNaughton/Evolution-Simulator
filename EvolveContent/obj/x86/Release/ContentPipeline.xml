@@ -7,26 +7,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\font.xnb</Output>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\font.xnb</Output>
       <Time>2014-08-12T02:25:58.1388296+01:00</Time>
-    </Item>
-    <Item>
-      <Source>foodTex.png</Source>
-      <Name>foodTex</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\foodTex.xnb</Output>
-      <Time>2014-08-16T13:01:50.4311318+01:00</Time>
-    </Item>
-    <Item>
-      <Source>wallTex.png</Source>
-      <Name>wallTex</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\wallTex.xnb</Output>
-      <Time>2014-08-16T13:26:13.5398168+01:00</Time>
     </Item>
     <Item>
       <Source>botTex.png</Source>
@@ -37,19 +19,37 @@
         <Data Key="GenerateMipmaps">True</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\botTex.xnb</Output>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\botTex.xnb</Output>
       <Time>2014-08-16T12:20:29.0102027+01:00</Time>
+    </Item>
+    <Item>
+      <Source>foodTex.png</Source>
+      <Name>foodTex</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\foodTex.xnb</Output>
+      <Time>2014-08-16T13:01:50.4311318+01:00</Time>
+    </Item>
+    <Item>
+      <Source>wallTex.png</Source>
+      <Name>wallTex</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\wallTex.xnb</Output>
+      <Time>2014-08-16T13:30:59.7231856+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
       <TargetProfile>HiDef</TargetProfile>
-      <BuildConfiguration>Debug</BuildConfiguration>
-      <CompressContent>false</CompressContent>
+      <BuildConfiguration>Release</BuildConfiguration>
+      <CompressContent>true</CompressContent>
       <RootDirectory>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\EvolveContent\</RootDirectory>
       <LoggerRootDirectory>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\EvolveContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\</OutputDirectory>
+      <IntermediateDirectory>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\EvolveContent\obj\x86\Release\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

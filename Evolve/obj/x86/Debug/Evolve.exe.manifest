@@ -100,7 +100,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>LZwxhYkepke2yavXw+AfHMvMpeA=</dsig:DigestValue>
+        <dsig:DigestValue>lGEOH+XHDE0AeU2UmRDY6f53TUc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -122,22 +122,22 @@
       <dsig:DigestValue>VW5q7hvoVSsp/M3t/RXbF8f7h8w=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\foodTex.xnb" size="863">
+  <file name="Content\foodTex.xnb" size="287">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>5yLF8bccG8oV2WJU5BmkNcZhcgU=</dsig:DigestValue>
+      <dsig:DigestValue>RxXnf0blkk27j0cgmOzVHmQffY8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\wallTex.xnb" size="671">
+  <file name="Content\wallTex.xnb" size="223">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>O1KtTeaAGxqefm7Qn3Kk0Pjz36U=</dsig:DigestValue>
+      <dsig:DigestValue>SrjI7JTeDIuMb9i+jUD3BUUdYWI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Game.ico" size="4286">

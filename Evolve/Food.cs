@@ -14,6 +14,8 @@ namespace Evolve
 
         public const int reproduce1 = 1000;
         public const int reproduce2 = 1200;
+        public const int reproduce3 = 1350;
+        public const int reproduce4 = 1500;
 
         public Food(double x, double y, int e, Texture2D tex)
             : base(x, y, tex)
@@ -23,19 +25,30 @@ namespace Evolve
             this.energy = e;
         }
 
-        public new Boolean Update(GameTime gameTime)
+        public Boolean Update(GameTime gameTime, KeyboardState ks)
         {
-            this.energy++;
-            if (this.energy == reproduce1-1 || this.energy == reproduce2-1)
+            int iterations = 1;
+            if(ks.IsKeyDown(Keys.F))
             {
-                return true;
+                iterations = 100;
             }
 
-            if (this.energy > reproduce2)
+            for (int i = 0; i != iterations; i++)
             {
-                this.energy = reproduce2;
-            }
 
+                this.energy++;
+                if (this.energy == reproduce1 - 1 || this.energy == reproduce2 - 1
+                    || this.energy == reproduce3 - 1 || this.energy == reproduce4 - 1)
+                {
+                    return true;
+                }
+
+                if (this.energy > reproduce4)
+                {
+                    this.energy = reproduce4;
+                }
+            }
+            
             return false;
         }
 

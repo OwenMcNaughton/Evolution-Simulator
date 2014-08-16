@@ -31,28 +31,16 @@ namespace Evolve
 
         public static double Angle(Vector2 a, Vector2 b)
         {
-            double xDiff = a.X - b.X;
-            double yDiff = a.Y - b.Y;
-            if (a.X < b.X && a.Y >= b.Y)
+            double angle = Math.Atan2(b.Y - a.Y, b.X - a.X) * (180 / Math.PI);
+
+            angle += 90;
+
+            if (angle < 0)
             {
-                return Math.Atan2(xDiff, yDiff) * 180 / Math.PI;
+                angle = 360 + angle;
             }
 
-            if (a.X < b.X && a.Y < b.Y)
-            {
-                return (Math.Atan2(xDiff, yDiff) * 180 / Math.PI)+90;
-            }
-
-            if (a.X >= b.X && a.Y < b.Y)
-            {
-                return (Math.Atan2(xDiff, yDiff) * 180 / Math.PI)+180;
-            }
-
-            else
-            {
-                return (Math.Atan2(xDiff, yDiff) * 180 / Math.PI)+270;
-            }
-            
+            return angle;
         }
 
         public static double Distance(Vector2 a, Vector2 b)
