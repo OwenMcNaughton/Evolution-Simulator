@@ -1,0 +1,4 @@
+Content\font.xnb
+Content\foodTex.xnb
+Content\wallTex.xnb
+Content\botTex.xnb

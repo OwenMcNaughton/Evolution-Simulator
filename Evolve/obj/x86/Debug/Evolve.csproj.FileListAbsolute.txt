@@ -1,0 +1,14 @@
+c:\users\owen\documents\visual studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Evolve.exe
+c:\users\owen\documents\visual studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Evolve.pdb
+c:\users\owen\documents\visual studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Debug\Evolve.csprojResolveAssemblyReference.cache
+c:\users\owen\documents\visual studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+c:\users\owen\documents\visual studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Debug\Evolve.exe
+c:\users\owen\documents\visual studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Debug\Evolve.pdb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Evolve.exe.manifest
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Evolve.application
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Debug\Evolve.exe.manifest
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Debug\Evolve.application
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\font.xnb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\botTex.xnb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\foodTex.xnb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Debug\Content\wallTex.xnb
