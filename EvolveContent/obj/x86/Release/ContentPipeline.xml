@@ -40,6 +40,33 @@
       <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\wallTex.xnb</Output>
       <Time>2014-08-16T13:30:59.7231856+01:00</Time>
     </Item>
+    <Item>
+      <Source>targetTex.png</Source>
+      <Name>targetTex</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\targetTex.xnb</Output>
+      <Time>2014-08-17T18:30:16.2371753+01:00</Time>
+    </Item>
+    <Item>
+      <Source>symbols.png</Source>
+      <Name>symbols</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\symbols.xnb</Output>
+      <Time>2014-08-17T22:37:27.642318+01:00</Time>
+    </Item>
+    <Item>
+      <Source>smallFont.spritefont</Source>
+      <Name>smallFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\smallFont.xnb</Output>
+      <Time>2014-08-17T22:38:29.0558306+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

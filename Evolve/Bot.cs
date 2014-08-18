@@ -27,12 +27,23 @@ namespace Evolve
 
         public int energy;
         public const int hungerLevel = 10000;
+
+        public int foodEaten;
+
+        public int age;
+        public const int oldAge = 1000;
+
         public Boolean dead;
 
         public const int energyImpart = 1000;
 
         public Triangle fov;
-        public Texture2D fovColor;
+        public Texture2D fovColorWhite;
+        public Texture2D fovColorBlue;
+        public Texture2D fovColorRed;
+        public Texture2D fovColorGreen;
+        public Texture2D fovColorCyan;
+        public Texture2D fovColorPurple;
 
         public enum Priorities
         {
@@ -52,8 +63,8 @@ namespace Evolve
             this.fovAngle = fa;
             this.fovDistance = fd;
 
-            this.fovColor = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
-            this.fovColor.SetData<Color>(new Color[] { Color.White });
+            this.fovColorWhite = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
+            this.fovColorWhite.SetData<Color>(new Color[] { Color.White });
 
             this.accel = .1;
 
@@ -67,13 +78,13 @@ namespace Evolve
             this.fovAngle = fa;
             this.fovDistance = fd;
 
-            this.fovColor = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
-            this.fovColor.SetData<Color>(new Color[] { Color.White });
+            this.fovColorWhite = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
+            this.fovColorWhite.SetData<Color>(new Color[] { Color.White });
 
             Random gen = new Random();
             Command[][] oldcoms = new Command[1][];
             oldcoms[0] = new Command[1];
-            oldcoms[0][0] = new Command(Command.FORWARD, 60);
+            oldcoms[0][0] = new Command(Command.FORWARD, 10);
             this.behaviour = new Behaviour(oldcoms);
 
             this.accel = .1;
@@ -81,25 +92,38 @@ namespace Evolve
             this.energy = 1000;
 
             this.target = new Vector2(-1, -1);
+
+            this.age = 0;
         }
 
-        public Bot(double x, double y, Texture2D tex, double size, double fa, double fd, Behaviour b, Random gen)
+        public Bot(double x, double y, Texture2D tex, double size, double fa, double fd, Behaviour b, Random gen, Texture2D[] fovs)
             : base(x, y, tex)
         {
             this.fov = new Triangle(new Vector2((float)x, (float)y), base.angle, fa, fd);
             this.fovAngle = fa;
             this.fovDistance = fd;
 
-            this.fovColor = new Texture2D(Game1.graphics.GraphicsDevice, 1, 1);
-            this.fovColor.SetData<Color>(new Color[] { Color.White });
+            this.fovColorWhite = fovs[0];
 
-            this.behaviour = new Behaviour(b, gen);
+            this.fovColorBlue = fovs[1];
+
+            this.fovColorRed = fovs[2];
+
+            this.fovColorGreen = fovs[3];
+
+            this.fovColorCyan = fovs[4];
+
+            this.fovColorPurple = fovs[5];
+            
+            this.behaviour = new Behaviour(b, gen, Game1.mutation);
 
             this.accel = .1;
 
             this.energy = 1000;
 
             this.target = new Vector2(-1, -1);
+
+            this.age = 0;
         }
 
 
@@ -177,6 +201,16 @@ namespace Evolve
             base.angularVelocity += .2;
         }
 
+        public void TurnLeft()
+        {
+            base.angle -= 2;
+        }
+
+        public void TurnRight()
+        {
+            base.angle += 2;
+        }
+
         public void FullStop()
         {
             this.angularVelocity -= this.angularVelocity / 10;
@@ -190,13 +224,32 @@ namespace Evolve
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(base.texture, base.bounds, null, Color.White, (float)Triangle.ToRadian(base.angle), base.texCenter, SpriteEffects.None, 0);
-            this.fov.Draw(spriteBatch, this.fovColor);
+            switch (this.behaviour.rPoint)
+            {
+                case 0: this.fov.Draw(spriteBatch, this.fovColorWhite); break;
+                case 1: this.fov.Draw(spriteBatch, this.fovColorRed); break;
+                case 2: this.fov.Draw(spriteBatch, this.fovColorBlue); break;
+                case 3: this.fov.Draw(spriteBatch, this.fovColorGreen); break;
+                case 4: this.fov.Draw(spriteBatch, this.fovColorCyan); break;
+                case 5: this.fov.Draw(spriteBatch, this.fovColorPurple); break;
+            }
+            if (this.target.X != -1)
+            {
+                spriteBatch.Draw(Game1.targetTex, new Vector2(this.target.X - 4, this.target.Y - 4), Color.White);
+            }
         }
 
         public void Update(GameTime gameTime, KeyboardState ks)
         {
-            this.energy--;
+            //this.energy -= (int)Line.Distance(new Vector2(0, 0), this.vel)*20;
+
             if (this.energy < 0)
+            {
+                this.energy = 0;
+            }
+
+            this.age++;
+            if (this.age > oldAge)
             {
                 this.dead = true;
             }
@@ -206,16 +259,19 @@ namespace Evolve
             {
                 if(this.bounds.Intersects(Game1.food[i].bounds))
                 {
-                    this.energy += Game1.food[i].energy;
                     if (this.foodTarget != null)
                     {
                         if (Game1.food[i].GetHashCode() == this.foodTarget.GetHashCode())
                         {
                             this.foodTarget = null;
+                            this.target = new Vector2(-1, -1);
+                            this.energy += Game1.food[i].energy;
+                            Game1.food.Remove(Game1.food[i]);
+                            Game1.totalFoodBitsEaten[Game1.generations]++;
+                            this.foodEaten++;
+                            i--;
                         }
                     }
-                    Game1.food.Remove(Game1.food[i]);
-                    i--;
                 }
             }
 
@@ -241,8 +297,8 @@ namespace Evolve
             {
                 case Command.FORWARD: this.AccelerateForward(); break;
                 case Command.BACKWARD: this.AccelerateBackward(); break;
-                case Command.ANGULAR_LEFT: this.AngularLeft(); break;
-                case Command.ANGULAR_RIGHT: this.AngularRight(); break;
+                case Command.ANGULAR_LEFT: this.TurnLeft(); break;
+                case Command.ANGULAR_RIGHT: this.TurnRight(); break;
                 case Command.FULL_STOP: this.FullStop(); break;
             }
 

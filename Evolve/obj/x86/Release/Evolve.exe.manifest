@@ -93,14 +93,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Evolve.exe" size="34816">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Evolve.exe" size="39936">
       <assemblyIdentity name="Evolve" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>drg/B15rTup3X83ZFvnsRdAeIeQ=</dsig:DigestValue>
+        <dsig:DigestValue>62xokv0LiiPZ1XWK9W5mHZl83cs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -129,6 +129,33 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>MpXlzy8zyVc2ctub+0uPuqN6D4o=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\smallFont.xnb" size="2642">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>n6gPuCT9IPowtClt7iqJFS7l51M=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\symbols.xnb" size="1044">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>mEHV7LTMUyWuqCSnAucR8ONokE4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\targetTex.xnb" size="224">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>nsDEjn8vf1zSGBDi2dWOv7N+pt0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\wallTex.xnb" size="212">

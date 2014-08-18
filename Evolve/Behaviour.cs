@@ -35,12 +35,12 @@ namespace Evolve
             this.commands = c;
 
             this.explore = 0;
-            this.targetLeft = 0;
-            this.targetRight = 0;
-            this.targetForward = 0;
+            this.targetLeft = 1;
+            this.targetRight = 2;
+            this.targetForward = 3;
         }
 
-        public Behaviour(Behaviour b, Random gen)
+        public Behaviour(Behaviour b, Random gen, int m)
         {
             Command[][] oldCommands = b.commands;
 
@@ -49,7 +49,7 @@ namespace Evolve
             this.pollFov = 0;
 
             // 1/10 chance of a new blank routine, up to a max of 5
-            if (gen.Next(10) == 0 && oldCommands.Length <= 5)
+            if (gen.Next(m) == 0 && oldCommands.Length <= 3)
             {
                 this.commands = new Command[oldCommands.Length + 1][];
             }
@@ -67,7 +67,7 @@ namespace Evolve
                 }
                 else
                 {
-                    if (gen.Next(10) == 0 && oldCommands[i].Length <= 5)
+                    if (gen.Next(m) == 0 && oldCommands[i].Length <= 3)
                     {
                         this.commands[i] = new Command[oldCommands[i].Length + 1];
                     }
@@ -80,10 +80,10 @@ namespace Evolve
 
             for (int i = 0; i != this.commands.Length; i++)
             {
-                // If it's a new command, random method with 60 repeats
+                // If it's a new command, random method with 10 repeats
                 if (i == oldCommands.Length)
                 {
-                    commands[i][0] = new Command(gen.Next(Command.methods), 60);
+                    commands[i][0] = new Command(gen.Next(Command.methods), 10);
                 }
                 else
                 {
@@ -92,25 +92,25 @@ namespace Evolve
                         // If new command, same story
                         if (j == oldCommands[i].Length)
                         {
-                            commands[i][j] = new Command(gen.Next(Command.methods), 60);
+                            commands[i][j] = new Command(gen.Next(Command.methods), 10);
                         }
                         else // 1/10 chance of a different method with same repeats
                         {
                             
-                            if (gen.Next(10) == 0)
+                            if (gen.Next(m) == 0)
                             {
                                 this.commands[i][j] = new Command(gen.Next(Command.methods), oldCommands[i][j].repeats);
 
                             }
                             else // it's the same method with... 
                             {
-                                if (gen.Next(5) == 0) // 1/5 chance of +- (0-99) repeats 
+                                if (gen.Next(m/2) == 0) // 1/5 chance of +- (0-3) repeats 
                                 {
-                                    int repeats = oldCommands[i][j].repeats + (gen.Next(20) - 10);
-                                    if (repeats < 0)
+                                    int repeats = oldCommands[i][j].repeats + (gen.Next(7) - 3);
+                                    if (repeats <= 0)
                                         repeats = 1;
-                                    else if (repeats > 120)
-                                        repeats = 120;
+                                    else if (repeats > 20)
+                                        repeats = 20;
 
                                     this.commands[i][j] = new Command(oldCommands[i][j].method, repeats);
                                 }
@@ -125,7 +125,7 @@ namespace Evolve
             }
 
             // 1/10 chance of each routine type pointer being randomized to a new one
-            if (gen.Next(10) == 0)
+            if (gen.Next(m) == -1)
             {
                 this.explore = gen.Next(this.commands.Length);
             }
@@ -134,7 +134,7 @@ namespace Evolve
                 this.explore = b.explore;
             }
 
-            if (gen.Next(10) == 0)
+            if (gen.Next(m) == -1)
             {
                 this.targetLeft = gen.Next(this.commands.Length);
             }
@@ -143,7 +143,7 @@ namespace Evolve
                 this.targetLeft = b.targetLeft;
             }
 
-            if (gen.Next(10) == 0)
+            if (gen.Next(m) == -1)
             {
                 this.targetRight = gen.Next(this.commands.Length);
             }
@@ -152,7 +152,7 @@ namespace Evolve
                 this.targetRight = b.targetRight;
             }
 
-            if (gen.Next(10) == 0)
+            if (gen.Next(m) == -1)
             {
                 this.targetForward = gen.Next(this.commands.Length);
             }
@@ -164,21 +164,27 @@ namespace Evolve
         }
 
         public int Run(Bot bot)
-        {       
-            if (this.commands[rPoint][cPoint].count < this.commands[rPoint][cPoint].repeats)
+        {
+
+            if (rPoint < this.commands.Length && cPoint < this.commands[rPoint].Length)
             {
-                return this.commands[rPoint][cPoint].Do();
-            }
-            else
-            {
-                this.cPoint++;
-                this.commands[rPoint][cPoint - 1].count = 0;
-                if (cPoint >= this.commands[rPoint].Length)
+                if (this.commands[rPoint][cPoint].count < this.commands[rPoint][cPoint].repeats)
                 {
-                    cPoint = 0;
+                    return this.commands[rPoint][cPoint].Do();
                 }
-                return -1;
+                else
+                {
+                    this.cPoint++;
+                    this.commands[rPoint][cPoint - 1].count = 0;
+                    if (cPoint >= this.commands[rPoint].Length)
+                    {
+                        cPoint = 0;
+                    }
+                    return -1;
+                }
             }
+
+            return 6600;
             
         }
 
@@ -186,6 +192,7 @@ namespace Evolve
         {
             if (this.pollFov == pollFovGap)
             {
+                int storeRPoint = this.rPoint;
                 pollFov = 0;
 
                 if (bot.energy < Bot.hungerLevel)
@@ -194,7 +201,7 @@ namespace Evolve
                 }
                 else
                 {
-                    bot.priority = (int)Bot.Priorities.mate;
+                    //bot.priority = (int)Bot.Priorities.mate;
                 }
 
                 bot = ExamineFov(bot);
@@ -222,7 +229,7 @@ namespace Evolve
                         this.rPoint = this.targetForward;
                     }
 
-                    this.cPoint = 0;
+                    
 
                 }
                 else
@@ -230,7 +237,10 @@ namespace Evolve
                     this.rPoint = this.explore;
                 }
 
-
+                if (this.rPoint != storeRPoint)
+                {
+                    this.cPoint = 0;
+                }
 
 
             }
@@ -262,7 +272,7 @@ namespace Evolve
 
                     if (bot.foodTarget == null && bot.priority == (int)Bot.Priorities.feed)
                     {
-                        bot.target = new Vector2(f.pos.X, f.pos.Y);
+                        bot.target = new Vector2(f.bounds.Center.X, f.bounds.Center.Y);
                         bot.foodTarget = f;
                     }
 
@@ -291,6 +301,72 @@ namespace Evolve
             }
 
             return bot;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, int xoffset)
+        {
+            for (int i = 0; i != this.commands.Length; i++)
+            {
+                for (int j = 0; j != this.commands[i].Length; j++)
+                {
+                    if (this.commands[i][j] != null)
+                    {
+                        switch (this.commands[i][j].method)
+                        {
+                            case Command.ANGULAR_LEFT:
+                                spriteBatch.Draw(Game1.symbols.getSprite(0, 0), new Vector2(xoffset + j * 42, 20 + i * 80), Color.White); break;
+                            case Command.ANGULAR_RIGHT:
+                                spriteBatch.Draw(Game1.symbols.getSprite(1, 0), new Vector2(xoffset + j * 42, 20 + i * 80), Color.White); break;
+                            case Command.FORWARD:
+                                spriteBatch.Draw(Game1.symbols.getSprite(2, 0), new Vector2(xoffset + j * 42, 20 + i * 80), Color.White); break;
+                            case Command.BACKWARD:
+                                spriteBatch.Draw(Game1.symbols.getSprite(3, 0), new Vector2(xoffset + j * 42, 20 + i * 80), Color.White); break;
+                            case Command.FULL_STOP:
+                                spriteBatch.Draw(Game1.symbols.getSprite(4, 0), new Vector2(xoffset + j * 42, 20 + i * 80), Color.White); break;
+                        }
+
+                        spriteBatch.DrawString(Game1.font, this.commands[i][j].repeats + "",
+                                                new Vector2(xoffset + j * 42, 38 + i * 80), Color.White);
+                    }
+
+                }
+            }
+
+            spriteBatch.DrawString(Game1.smallFont, "Explore", new Vector2(xoffset, 2 + this.explore * 80), Color.White);
+            spriteBatch.DrawString(Game1.smallFont, "Left", new Vector2(xoffset + 60, 2 + this.targetLeft * 80), Color.White);
+            spriteBatch.DrawString(Game1.smallFont, "Right", new Vector2(xoffset + 95, 2 + this.targetRight * 80), Color.White);
+            spriteBatch.DrawString(Game1.smallFont, "Forward", new Vector2(xoffset + 140, 2 + this.targetForward * 80), Color.White);
+
+            spriteBatch.Draw(Game1.symbols.getSprite(5, 0), new Vector2(xoffset + this.cPoint * 42,
+                                60 + this.rPoint * 80), Color.White);
+
+        }
+
+        public new String ToString()
+        {
+            String r = "";
+
+            for (int i = 0; i != this.commands.Length; i++)
+            {
+                for (int j = 0; j != this.commands[i].Length; j++)
+                {
+                    
+                    switch (this.commands[i][j].method)
+                    {
+                        case Command.FORWARD: r += "f" + this.commands[i][j].repeats; break;
+                        case Command.BACKWARD: r += "b" + this.commands[i][j].repeats; break;
+                        case Command.ANGULAR_LEFT: r += "l" + this.commands[i][j].repeats; break;
+                        case Command.ANGULAR_RIGHT: r += "r" + this.commands[i][j].repeats; break;
+                        case Command.FULL_STOP: r += "s" + this.commands[i][j].repeats; break;
+                    }
+                }
+
+                r += ";";
+            }
+
+            r += "|";
+
+            return r;
         }
     }
 }

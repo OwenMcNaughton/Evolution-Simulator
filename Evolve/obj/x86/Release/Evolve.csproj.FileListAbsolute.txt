@@ -11,3 +11,7 @@ C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86
 C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Release\Evolve.application
 C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Release\Evolve.exe
 C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Release\Evolve.pdb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\obj\x86\Release\Evolve.csprojResolveAssemblyReference.cache
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\targetTex.xnb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\symbols.xnb
+C:\Users\Owen\Documents\Visual Studio 2010\Projects\Evolve\Evolve\Evolve\bin\x86\Release\Content\smallFont.xnb

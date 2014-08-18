@@ -12,16 +12,14 @@ namespace Evolve
     {
         public int energy;
 
-        public const int reproduce1 = 1000;
-        public const int reproduce2 = 1200;
-        public const int reproduce3 = 1350;
-        public const int reproduce4 = 1500;
+        public const int reproduce1 = 2000;
+        public const int reproduce2 = 2500;
+        public const int reproduce3 = 3000;
+        public const int reproduce4 = 4000;
 
         public Food(double x, double y, int e, Texture2D tex)
             : base(x, y, tex)
         {
-            Random gen = new Random();
-
             this.energy = e;
         }
 

@@ -2,3 +2,6 @@ Content\font.xnb
 Content\botTex.xnb
 Content\foodTex.xnb
 Content\wallTex.xnb
+Content\targetTex.xnb
+Content\symbols.xnb
+Content\smallFont.xnb
